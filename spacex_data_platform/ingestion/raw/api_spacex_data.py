@@ -20,10 +20,10 @@ class ApiSpaceXData:
         """
         response = requests.get(self.url)
 
-        data_path = f"{self.raw_path}/{datetime.now().strftime('%Y_%m_%d__%H_%M%_S')}/spacex_data.json"
+        data_path = f"{self.raw_path}/{datetime.now().strftime('%Y_%m_%d__%H_%M_%S')}/spacex_data.json"
 
         os.makedirs(os.path.dirname(data_path), exist_ok=True)
 
         with open(data_path, "w") as file:
             file.write(response.text)
-        return self.raw_path
+        return data_path
