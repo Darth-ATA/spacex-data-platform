@@ -61,7 +61,7 @@ repos:
     rev: 1.7.0  # or master if you're bold
     hooks:
       - id: interrogate
-        args: [src, --fail-under=40]
+        args: [spacex_data_platform, --fail-under=80]
         pass_filenames: false  # needed if excluding files with pyproject.toml or setup.cfg
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.2.0
