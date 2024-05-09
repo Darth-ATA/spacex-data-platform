@@ -17,6 +17,9 @@ python-dotenv = "^1.0.1"
 s3fs = "^2024.3.1"
 ruff = "^0.4.1"
 pre-commit = "^3.7.0"
+interrogate = "^1.7.0"
+pytest-cov = "^5.0.0"
+
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
@@ -25,3 +28,34 @@ pytest-xdist = "^3.3.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.interrogate]
+ignore-init-method = false
+ignore-init-module = true
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = false
+ignore-setters = false
+ignore-overloaded-functions = false
+fail-under = 80
+# example values
+exclude = ["setup.py", "docs", "build"]
+# example regex
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*", ".*__main__.py", ".*config.py", ".*constants.py"]
+ext = []
+# possible values: sphinx (default), google
+style = "google"
+# possible values: 0 (minimal output), 1 (-v), 2 (-vv)
+verbose = 0
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false
+# output file logation
+generate-badge = "badges/interrogate.svg"
+badge-format = "svg"
+badge-style = "flat"

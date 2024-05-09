@@ -21,3 +21,12 @@ Also uses [pre-commit](https://pre-commit.com) for code formatting and linting. 
 ```bash
 pre-commit install
 ```
+
+We are using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages. To enforce this, we are using a `pre-commit hook` that will ensure your commits are following the conventional commits format.
+
+## Project Structure
+
+The project is composed by:
+
+- ingestion: it contains the code to ingest data from the SpaceX API
+  - raw: it contains the raw data from the API
