@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "spacex-data-platform"
+version = "0.1.0"
+description = "SpaceX Data Platform"
+authors = ["Darth-ATA"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+pandas = "^2.1.1"
+numpy = "^1.26.0"
+boto3 = "^1.28.57"
+awscli = "^1.29.57"
+types-requests = "^2.31.0.10"
+streamlit = "^1.28.0"
+python-dotenv = "^1.0.1"
+s3fs = "^2024.3.1"
+ruff = "^0.4.1"
+pre-commit = "^3.7.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-xdist = "^3.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
