@@ -4,6 +4,7 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with mypy](https://img.shields.io/badge/mypy-checked-blue)](http://mypy-lang.org/)
 [![Docstring checked with Interrogate](./badges/interrogate.svg)](https://interrogate.readthedocs.io/en/latest/)
+[![codecov](https://codecov.io/gh/Darth-ATA/spacex-data-platform/graph/badge.svg?token=W0F50KAR2S)](https://codecov.io/gh/Darth-ATA/spacex-data-platform)
 
 Automate the build of a simple yet scalable Data Platform
 
