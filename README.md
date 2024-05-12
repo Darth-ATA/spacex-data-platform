@@ -37,4 +37,4 @@ The project is composed by:
 
 - ingestion: it contains the code to ingest data from the SpaceX API
   - raw: it contains the raw data from the API
-  - bronze: it transforms the raw data in `json` to `parquet` setting the index to `id`
+  - bronze: it transforms the raw data in `json` to `parquet` setting the index to `id`. Also in this layer, we are adding the `create_date` and `provider_code` columns
