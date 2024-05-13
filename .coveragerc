@@ -1,0 +1,3 @@
+[run]
+omit =
+    spacex_data_platform/data_visualization/*
