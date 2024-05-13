@@ -10,8 +10,7 @@ from spacex_data_platform.ingestion.silver.cores_data import SpaceXCores
 from spacex_data_platform.ingestion.silver.schemas.cores_flights import (
     CoresFlightsSchema,
 )
-
-FROZEN_CREATE_DATE = datetime.now().strftime(DATE_FORMAT)
+from tests.ingestion.test_bronze import FROZEN_CREATE_DATE
 
 
 class TestSpaceXCores:
