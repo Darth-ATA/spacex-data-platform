@@ -1,9 +1,11 @@
-import pytest
-from unittest.mock import patch
-from spacex_data_platform.ingestion.bronze.bronze_data import SpaceXBronze
 from datetime import datetime
+from unittest.mock import patch
+
 import pandas as pd
+import pytest
 from freezegun import freeze_time
+
+from spacex_data_platform.ingestion.bronze.bronze_data import SpaceXBronze
 from spacex_data_platform.ingestion.constants import DATE_FORMAT, SPACEX_PROVIDER_CODE
 
 FROZEN_CREATE_DATE = datetime.now().strftime(DATE_FORMAT)
@@ -27,7 +29,7 @@ class TestRaw:
                 "create_date": datetime.now().strftime(DATE_FORMAT),
                 "provider_code": [SPACEX_PROVIDER_CODE],
             }
-        ).set_index("id")
+        )
 
     @freeze_time(FROZEN_CREATE_DATE)
     @patch("pandas.read_json")
@@ -43,7 +45,6 @@ class TestRaw:
         assert expected_path == result_path
 
         result = pd.read_parquet(result_path)
-        assert result.index.name == "id"
         pd.testing.assert_frame_equal(result, bronzified_data)
 
     @patch("pandas.read_json")
