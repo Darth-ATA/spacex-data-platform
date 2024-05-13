@@ -38,3 +38,9 @@ The project is composed by:
 - ingestion: it contains the code to ingest data from the SpaceX API
   - raw: it contains the raw data from the API
   - bronze: it transforms the raw data in `json` to `parquet` setting the index to `id`. Also in this layer, we are adding the `create_date` and `provider_code` columns
+  - silver: it contains the code to transform the bronze data to silver data
+    - cores_data: it takes from `SpaceX` data, the information about the cores by flight. We have created a [Pandera](https://pandera.readthedocs.io/en/stable/) schema to validate the data both the schema and some data quality rules:
+      - Check if the combination of 'id' and 'core' is unique
+      - If landing_attempt is True, landing_success, landpad and landing_type must be filled
+        Except if landing_type is 'Ocean' (We need to check why are we considering this a success)
+      - If core is reused, flight must be bigger than 1

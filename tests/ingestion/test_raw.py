@@ -1,7 +1,9 @@
-import pytest
-from unittest.mock import patch, Mock
-from spacex_data_platform.ingestion.raw.api_spacex_data import ApiSpaceXData
 from datetime import datetime
+from unittest.mock import Mock, patch
+
+import pytest
+
+from spacex_data_platform.ingestion.raw.api_spacex_data import ApiSpaceXData
 
 
 class TestRaw:
@@ -17,6 +19,6 @@ class TestRaw:
         mock_response = Mock()
         mock_response.text = json_data
         mock_request.return_value = mock_response
-        api_spacex_data = ApiSpaceXData(tmp_path)
+        api_spacex_data = ApiSpaceXData(raw_data_path=tmp_path)
         result_path = api_spacex_data.get_data_and_store()
         assert expected_path == result_path
