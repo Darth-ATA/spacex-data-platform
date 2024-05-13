@@ -11,7 +11,16 @@ Automate the build of a simple yet scalable Data Platform.
 
 The application is available at [spacex-data-platform](https://spacex-data-platform-4abww5mtqfbsndzaugjthk.streamlit.app/).
 
-Here you can choose the data you want to see and query against it.
+Here you can choose the data you want to see and query against it. And if you want to re-run the ingestion process, you can do it by clicking the button `Run ingestion`. This will re-ingest the data from the `SpaceX API` using a new Date.
+
+![space_x_explorer](images/space_x_explorer.gif)
+
+The application gives you the ability to visualise both `Fairings` and `Cores` data.
+And then, you have the answer to the questions that are asked by the assesement:
+
+- Each time a rocket is launched, one or more cores (first stages) are involved. Sometimes, cores are recovered after the launch and reused posteriorly in another launch. What is the maximum number of times a core has been used? Write an SQL query to find the result.
+- Which cores have been reused in less than 50 days after the previous launch? Write an SQL query to find the result.
+- List the months in which there has been more than one launch. Write an SQL query to find the results.
 
 ## Requirements
 
@@ -73,9 +82,14 @@ Also any other transformation thata Data Scientist or Product ask us for doing t
 As we do not have a real data platform, we are going to simulate it.
 We are going to use the `Silver` data to simulate the data platform in combination with [Streamlit](https://streamlit.io) and [DuckDB](https://duckdb.org/). We are going to create a simple web application where we can see the data and query against it with `DuckDB`.
 
+All the questions are answered in the [Data Platform Simulator](https://spacex-data-platform-4abww5mtqfbsndzaugjthk.streamlit.app/). But I will include here the links to the SQL queries:
+
 - Each time a rocket is launched, one or more cores (first stages) are involved. Sometimes, cores are recovered after the launch and reused posteriorly in another launch. What is the maximum number of times a core has been used? Write an SQL query to find the result.
+  - Answer: [get_max_number_of_times_a_core_has_been_used](spacex_data_platform/data_visualization/run.py#L56)
 - Which cores have been reused in less than 50 days after the previous launch? Write an SQL query to find the result.
+  - Answer: [get_cores_used_in_less_than_x_days](spacex_data_platform/data_visualization/run.py#L68), here I changed 50 by 1000 because we do not have data for 50 days.
 - List the months in which there has been more than one launch. Write an SQL query to find the results.
+  - Answer: [get_months_in_which_there_has_been_more_than_one_launch](spacex_data_platform/data_visualization/run.py#L83)
 
 ## End architecture
 
