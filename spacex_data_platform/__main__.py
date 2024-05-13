@@ -5,6 +5,8 @@ import logging
 from spacex_data_platform.ingestion.bronze.bronze_data import SpaceXBronze
 from spacex_data_platform.ingestion.raw.api_spacex_data import ApiSpaceXData
 from spacex_data_platform.ingestion.silver.cores_data import SpaceXCores
+from spacex_data_platform.ingestion.silver.fairings_data import SpaceXFairings
+from spacex_data_platform.ingestion.silver.silver_data import SilverDataInterface
 
 
 class Main:
@@ -13,7 +15,10 @@ class Main:
     def __init__(self):
         self._raw = ApiSpaceXData()
         self._bronze = SpaceXBronze()
-        self._silver = {"space_x_cores": SpaceXCores()}
+        self._silver = {
+            "space_x_fairings": SpaceXFairings(),
+            "space_x_cores": SpaceXCores(),
+        }
 
     def run(self) -> None:
         """Run all the data-platform process:
@@ -27,7 +32,8 @@ class Main:
         logging.info(f"Bronze data stored in {bronze_data_path}")
         logging.info("Starting silver process")
         for key, value in self._silver.items():
-            silver_data_path = value.run(bronze_data_path)
+            silver_data: SilverDataInterface = value
+            silver_data_path = silver_data.run(bronze_data_path)
             logging.info(f"{key} data stored in {silver_data_path}")
         logging.info("Silver process finished")
 
