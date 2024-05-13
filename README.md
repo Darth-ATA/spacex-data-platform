@@ -86,7 +86,7 @@ Also any other transformation thata Data Scientist or Product ask us for doing t
 As we do not have a real data platform, we are going to simulate it.
 We are going to use the `Silver` data to simulate the data platform in combination with [Streamlit](https://streamlit.io) and [DuckDB](https://duckdb.org/). We are going to create a simple web application where we can see the data and query against it with `DuckDB`.
 
-The application is available at [spacex-data-platform](https://spacex-data-platform-ffgbkpdctuymeg27xwg5su.streamlit.app/).
+The application is available at [spacex-data-platform](https://spacex-data-platform-4abww5mtqfbsndzaugjthk.streamlit.app/).
 
 But you can try it locally by running:
 
