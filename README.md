@@ -80,3 +80,26 @@ Right now Gold and Silver are the same as we do not have multiple data sources. 
 
 But here, we would do transformations where we select which data point we want if is repeated for different provider.
 Also any other transformation thata Data Scientist or Product ask us for doing the work easier.
+
+### [Data Platform Simulator](spacex_data_platform/data_visualization/run.py)
+
+As we do not have a real data platform, we are going to simulate it.
+We are going to use the `Silver` data to simulate the data platform in combination with [Streamlit](https://streamlit.io) and [DuckDB](https://duckdb.org/). We are going to create a simple web application where we can see the data and query against it with `DuckDB`.
+
+The application is available at [spacex-data-platform](https://spacex-data-platform-ffgbkpdctuymeg27xwg5su.streamlit.app/).
+
+But you can try it locally by running:
+
+```bash
+streamlit run spacex_data_platform/data_visualization/run.py
+```
+
+The web will be deployed at `http://localhost:8502/`.
+
+In this web application, you will be able to choose the data version you want to query and the table you want to query against.
+
+And after you choose it, you will see the Dataframes and the answer to the questions:
+
+- Each time a rocket is launched, one or more cores (first stages) are involved. Sometimes, cores are recovered after the launch and reused posteriorly in another launch. What is the maximum number of times a core has been used? Write an SQL query to find the result.
+- Which cores have been reused in less than 50 days after the previous launch? Write an SQL query to find the result.
+- List the months in which there has been more than one launch. Write an SQL query to find the results.
