@@ -8,9 +8,10 @@ import pandera
 from spacex_data_platform.ingestion.silver.schemas.cores_flights import (
     CoresFlightsSchema,
 )
+from spacex_data_platform.ingestion.silver.silver_data import SilverDataInterface
 
 
-class SpaceXCores:
+class SpaceXCores(SilverDataInterface):
     """Class to create the cores flight data from the bronze data"""
 
     @staticmethod

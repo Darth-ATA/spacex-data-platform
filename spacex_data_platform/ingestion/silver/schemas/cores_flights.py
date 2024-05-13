@@ -1,11 +1,17 @@
+"""This module contains the schema to validate the cores flights schema."""
+
 import pandas as pd
 import pandera as pa
 from pandera.typing import Series
 
 
 class CoresFlightsSchema(pa.DataFrameModel):
+    """Schema to validate the cores flights data"""
+
     id: Series[str] = pa.Field(nullable=True, coerce=True)
     core: Series[str] = pa.Field(nullable=False, coerce=True)
+    provider_code: Series[str] = pa.Field(nullable=False, coerce=True)
+    create_date: Series[str] = pa.Field(nullable=False, coerce=True)
     flight: Series[int] = pa.Field(nullable=False, coerce=True)
     gridfins: Series[pd.BooleanDtype] = pa.Field(nullable=False, coerce=True)
     landing_attempt: Series[pd.BooleanDtype] = pa.Field(nullable=True, coerce=True)
@@ -26,6 +32,18 @@ class CoresFlightsSchema(pa.DataFrameModel):
             Series[bool]: returns what rows accomplish and what not the condition
         """
         return ~df.duplicated(subset=["id", "core"])
+
+    @pa.check(create_date, name="create_date_format")
+    def create_date_format(cls, date_str: Series[str]) -> Series[bool]:
+        """Check if the date has the format 'YYYY-MM-DDTHH:MM:SS'
+
+        Args:
+            date_str (Series[str]): date to be checked
+
+        Returns:
+            Series[bool]: returns what rows accomplish and what not the condition
+        """
+        return date_str.str.match(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}")
 
     @pa.dataframe_check
     def if_landing_success_landpad_and_landing_type_are_filled(

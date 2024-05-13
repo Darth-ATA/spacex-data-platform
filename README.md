@@ -33,14 +33,50 @@ We are using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.
 
 ## Project Structure
 
-The project is composed by:
+### Ingestion
 
-- ingestion: it contains the code to ingest data from the SpaceX API
-  - raw: it contains the raw data from the API
-  - bronze: it transforms the raw data in `json` to `parquet` setting the index to `id`. Also in this layer, we are adding the `create_date` and `provider_code` columns
-  - silver: it contains the code to transform the bronze data to silver data
-    - cores_data: it takes from `SpaceX` data, the information about the cores by flight. We have created a [Pandera](https://pandera.readthedocs.io/en/stable/) schema to validate the data both the schema and some data quality rules:
-      - Check if the combination of 'id' and 'core' is unique
-      - If landing_attempt is True, landing_success, landpad and landing_type must be filled
-        Except if landing_type is 'Ocean' (We need to check why are we considering this a success)
-      - If core is reused, flight must be bigger than 1
+This module is responsible for ingesting data from the SpaceX API.
+
+#### [Raw](spacex_data_platform/ingestion/raw)
+
+This module is responsible for storing the raw data from the SpaceX API. We do this to ensure that we have a copy of the data as it was at the time of ingestion.
+
+#### [Bronze](spacex_data_platform/ingestion/bronze)
+
+This module is responsible for transforming the raw data from the SpaceX API to a more structured format. We are transforming the data from `json` to `parquet`. Also in this layer, we are adding the `create_date` and `provider_code` columns. For having traceability of the data if we to know when the data was ingested and from where.
+
+#### [Silver](spacex_data_platform/ingestion/silver)
+
+This module is responsible for transforming the bronze data to a more data platform format. We are transforming the data from `parquet` to `parquet`. In this layer, if we have any data quality issues, we are going to raise an exception.
+Also this would be the layer where multiple data sources are combined.
+
+##### [Fairings](spacex_data_platform/ingestion/silver/fairings_data.py)
+
+It takes from `SpaceX` the information about `Fairings`.
+
+We are doing the Data Quality checks We are doing the Data Quality checks [fairings_data.py](spacex_data_platform/ingestion/silver/schemas/fairings_data.py)::
+
+- Check if `create_date_format` format 'YYYY-MM-DDTHH:MM:SS'
+- Check if `static_fire_date_utc_format` format 'YYYY-MM-DDTHH:MM:SS'
+- Check if `date_utc_format` format 'YYYY-MM-DDTHH:MM:SS.mmmZ'
+- Check if `date_local_format` format 'YYYY-MM-DDTHH:MM:SS+-HH:MM'
+
+This is the central piece of data from where we are going to reproduce the data.
+
+##### [Cores](spacex_data_platform/ingestion/silver/cores_data.py)
+
+It takes from `SpaceX` the information about `Cores`. Each `Fairing` could have multiple `Cores`.
+
+We are doing the Data Quality checks [cores_flights.py](spacex_data_platform/ingestion/silver/schemas/cores_flights.py):
+
+- Check if the combination of 'id' and 'core' is unique
+- If landing_attempt is True, landing_success, landpad and landing_type must be filled. Except if landing_type is 'Ocean' (We need to check why are we considering this a success)
+- If core is reused, flight must be bigger than 1
+- Check if `create_date_format` format 'YYYY-MM-DDTHH:MM:SS'
+
+#### [Gold](spacex_data_platform/ingestion/gold)
+
+Right now Gold and Silver are the same as we do not have multiple data sources. Or any other transformation that we need to do.
+
+But here, we would do transformations where we select which data point we want if is repeated for different provider.
+Also any other transformation thata Data Scientist or Product ask us for doing the work easier.
